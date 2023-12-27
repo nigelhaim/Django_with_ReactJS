@@ -16,6 +16,8 @@ class App extends React.Component{
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.getCookie = this.getCookie.bind(this)
+    this.startEdit = this.startEdit.bind(this)
+    this.deleteItem = this.deleteItem.bind(this)
   };
 
   getCookie(name) {
@@ -66,6 +68,15 @@ class App extends React.Component{
     console.log('ITEM', this.state.activeItem)
     const csrftoken = this.getCookie('csrftoken');
     var url = 'http://127.0.0.1:8000/todo/task_create/' 
+
+    var aI = this.state.activeItem.id
+    if(this.state.editing == true){
+      url= 'http://127.0.0.1:8000/todo/task_update/'+ aI + '/'
+      this.setState({
+        editing:false
+      })
+    }
+
     fetch(url, {
       method: 'POST',
       headers:{
@@ -88,9 +99,31 @@ class App extends React.Component{
     })
   }
 
+  startEdit(task){
+    this.setState({
+      activeItem:task,
+      editing:true,
 
+    })
+  }
+
+  deleteItem(task){
+    var csrftoken = this.getCookie('csrftoken')    
+    var aI = this.state.activeItem.id
+    var url = 'http://127.0.0.1:8000/todo/task_delete/' + aI + '/'
+    fetch(url, {
+      method: 'DELETE',
+      headers:{
+        'content-type': 'applications/json',
+        'X-CSRFToken': csrftoken
+      }
+    }).then((response) => {
+      this.fetchTasks()
+    })
+  }
   render(){
       var tasks = this.state.todoList;
+      var self = this;
     return(
       <div className='container'>
         <center>
@@ -115,10 +148,10 @@ class App extends React.Component{
                   <span>{task.title}</span>
                     </div>
                   <div style={{flex:1}}>
-                  <button>Edit</button>                    
+                  <button onClick={() => self.startEdit(task)}>Edit</button>                    
                 </div>
                   <div style={{flex:1}}>
-                  <button>Delete</button>                    
+                  <button onClick={() => self.deleteItem(task)}>Delete</button>                    
                 </div>
                     </div>
                 )
