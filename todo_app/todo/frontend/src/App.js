@@ -18,6 +18,7 @@ class App extends React.Component{
     this.getCookie = this.getCookie.bind(this)
     this.startEdit = this.startEdit.bind(this)
     this.deleteItem = this.deleteItem.bind(this)
+    this.taskStriker = this.taskStriker.bind(this)
   };
 
   getCookie(name) {
@@ -109,8 +110,8 @@ class App extends React.Component{
 
   deleteItem(task){
     var csrftoken = this.getCookie('csrftoken')    
-    var aI = this.state.activeItem.id
-    var url = 'http://127.0.0.1:8000/todo/task_delete/' + aI + '/'
+    var del = task.id
+    var url = 'http://127.0.0.1:8000/todo/task_delete/' + del + '/'
     fetch(url, {
       method: 'DELETE',
       headers:{
@@ -121,6 +122,26 @@ class App extends React.Component{
       this.fetchTasks()
     })
   }
+
+    taskStriker(task){
+      task.completed = !task.completed
+      console.log("TASK:", task.completed)
+
+      var up = task.id
+      var csrftoken = this.getCookie('csrftoken')
+    var url = 'http://127.0.0.1:8000/todo/task_update/' + up + '/'
+    fetch(url, {
+      method: 'POST',
+      headers:{
+        'content-type': 'application/json',
+        'X-CSRFToken': csrftoken
+      },
+      body:JSON.stringify({'completed':task.completed, 'title':task.title})
+    }).then((response) => {
+      this.fetchTasks()
+    })
+    }
+  
   render(){
       var tasks = this.state.todoList;
       var self = this;
@@ -144,8 +165,12 @@ class App extends React.Component{
               {tasks.map(function(task,index){
                 return(
                  <div key={index} className='task-wrapper flex-wrapper'>
-                  <div style={{flex:7}}>
-                  <span>{task.title}</span>
+                  <div onClick={() => self.taskStriker(task)}  style={{flex:7}}>
+                    {task.completed == false ? (
+                      <span>{task.title}</span>
+                    ) : (
+                      <strike>{task.title}</strike>
+                    )}
                     </div>
                   <div style={{flex:1}}>
                   <button onClick={() => self.startEdit(task)}>Edit</button>                    
