@@ -13,7 +13,7 @@ def apiOverview(request):
         'List': '/task_list',
         'Detail View': '/task-detail/<str:pk>/',
         'Create' : '/task-create',
-        'Uodate' : '/task-update/<str:pk>/',
+        'Update' : '/task-update/<str:pk>/',
         'Delete' : '/task-delete/<str:pk>',
         }
     
