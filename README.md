@@ -35,3 +35,5 @@ This is my repository in learning Django with React JS as a basis for our projec
 - **[TODO APP] | Django + REST Api (CRUD)** - https://youtu.be/TmsD8QExZ84?si=PFGaILkdch1eYduy
 - **[TODO APP] | Django + React with REST Api** - https://youtu.be/W9BjUoot2Eo?si=Ml89vN6YjB27E9lq
 
+## Notes App requires 
+- npm install react-router-dom
