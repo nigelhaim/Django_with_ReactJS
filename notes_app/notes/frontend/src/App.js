@@ -3,7 +3,7 @@ import Header from './components/header';
 import NotesListPage from './pages/NotesListPage';
 import NotePage from './pages/NotePage';
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Routes,
   Route,
 } from "react-router-dom";
