@@ -37,3 +37,7 @@ This is my repository in learning Django with React JS as a basis for our projec
 
 ## Notes App requires 
 - npm install react-router-dom
+
+### Final thoughts 
+- You can run these apps with just django simply run python manage.py runserver the template in the frontend will automatically be used. However if updates will be made you can first npm start the react then run npm run build to publish the changes.
+
