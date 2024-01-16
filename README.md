@@ -14,6 +14,8 @@ This is my repository in learning Django with React JS as a basis for our projec
 - cd to the frontend
 - run: npm start
 
+
+# When you combine FRONEND and BACKEND always build the react first before running the backend
 ### TODO app requirements 
 
 **Setup with REST framework and API**
